@@ -1,46 +1,24 @@
-import "dotenv/config.js";
-import crypto from "crypto";
-import { magicLinks } from "../database/schema/magiclink-schema.js";
-import { db } from "../database/connection/dbConnection.js";
-import { emailService } from "../services/email.service.js";
+import { generateAndSendMagicLink } from "../services/magiclink.service.js";
 
-export const generateAndSendMagicLink = async (customerEmail, adminId) => {
-  if (!customerEmail || !adminId) {
-    console.error("Missing customer email or admin ID.");
-    throw new Error("Email and admin ID are required.");
+export async function sendMagicLink(req, res) {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/login");
   }
+  const { email } = req.body;
+  const adminUser = req.user;
+  const adminId = adminUser.id; // Ensure admin is logged in
 
   try {
-    // 1. Generate token and expiration
-    const token = crypto.randomBytes(32).toString("hex");
-    const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 mins
-
-    console.log("Generated token:", token);
-
-    // 2. Store magic link in DB
-    await db.insert(magicLinks).values({
-      token,
-      customerEmail,
-      admin: adminId,
-      expiresAt,
+    await generateAndSendMagicLink(email, adminId);
+    res.status(200).json({
+      success: true,
+      message: "Magic link sent successfully.",
     });
-
-    console.log("Magic link inserted into database for:", customerEmail);
-
-    // 3. Build magic link URL
-    const baseUrl = process.env.BACKEND_URL;
-    if (!baseUrl) {
-      throw new Error("BACKEND_URL is not defined in environment variables.");
-    }
-
-    const magicLink = `${baseUrl}/auth/magic/callback?token=${token}&admin=${adminId}`;
-    console.log("Generated magic link:", magicLink);
-
-    // 4. Send email
-    await emailService(magicLink, customerEmail, expiresAt);
-    console.log("Magic link email sent to:", customerEmail);
   } catch (error) {
-    console.error("Error in generateAndSendMagicLink:", error.message);
-    throw new Error("Failed to generate and send magic link.");
+    res.status(500).json({
+      success: false,
+      message: "Error sending magic link.",
+      error: error.message,
+    });
   }
-};
+}

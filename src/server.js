@@ -1,10 +1,14 @@
 import "dotenv/config";
 import express from "express";
 import passport from "./middleware/auth/passport.js";
-import { generateAndSendMagicLink } from "./controllers/generateAndSendMagicLink.controller.js";
 import session from "express-session";
 import bodyParser from "body-parser";
+
 import authRoutes from "./routes/authRoutes.js";
+import magicLinkRoutes from "./routes/magicLinkRoutes.js";
+// import fileRoutes from "./routes/fileRoutes.js";
+
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.set("view engine", "ejs");
@@ -33,14 +37,8 @@ app.get("/", (req, res) => {
 });
 //MB auth routes
 app.use("/api/auth", authRoutes);
-
-app.get("/privacy-policy", (req, res) => {
-  res.render("privacy-policy.ejs");
-});
-
-app.get("/login", (req, res) => {
-  res.render("login.ejs");
-});
+app.use("/api/admin", magicLinkRoutes);
+// app.use("/api/upload-docs", fileRoutes);
 
 //for google auth
 app.get(
@@ -65,6 +63,14 @@ app.get(
   }
 );
 
+app.get("/privacy-policy", (req, res) => {
+  res.render("privacy-policy.ejs");
+});
+
+app.get("/login", (req, res) => {
+  res.render("login.ejs");
+});
+
 app.get("/dashboard", (req, res) => {
   console.log("User in dashboard:", req.user);
   if (!req.isAuthenticated()) {
@@ -80,23 +86,6 @@ app.get("/register", (req, res) => {
 app.get("/send-magic-link", (req, res) => {
   res.render("send-magic-link.ejs");
 });
-app.post("/admin/send-magic-link", async (req, res) => {
-  if (!req.isAuthenticated()) {
-    res.redirect("/login");
-  }
-  const { email } = req.body;
-  const adminUser = req.user;
-
-  const adminId = adminUser.id; // Ensure admin is logged in
-  console.log("Admin ID:", adminId);
-
-  try {
-    await generateAndSendMagicLink(email, adminId);
-    res.send("Magic link sent");
-  } catch (err) {
-    res.status(500).send("Error sending magic link");
-  }
-});
 
 app.get(
   "/auth/magic/callback",
@@ -106,6 +95,6 @@ app.get(
   })
 );
 
-app.listen(3000, () => {
-  console.log("Server is running on port 3000");
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT} `);
 });
