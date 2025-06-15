@@ -25,7 +25,7 @@ A Node.js backend application for DocBotAI with authentication, database integra
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/buildersacademyai/MBCP.git
+git clone https://github.com/KHATRIRAMESH/DocBotAI_Backend-v2.git
 cd docbotai_backend-v2
 ```
 
