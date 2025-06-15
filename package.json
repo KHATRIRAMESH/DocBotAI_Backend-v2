@@ -1,0 +1,36 @@
+{
+  "name": "docbotai_backend-v2",
+  "version": "1.0.0",
+  "description": "backend for docbotai v2",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.js",
+    "db:generate": "npx drizzle-kit generate",
+    "db:migrate": "npx drizzle-kit migrate"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@neondatabase/serverless": "^1.0.1",
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.44.2",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "expresss": "^0.0.0",
+    "nodemailer": "^7.0.3",
+    "nodemon": "^3.1.10",
+    "passport": "^0.7.0",
+    "passport-custom": "^1.1.1",
+    "passport-facebook": "^3.0.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "drizzle-kit": "^0.31.1",
+    "tsx": "^4.20.2"
+  }
+}
