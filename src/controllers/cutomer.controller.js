@@ -15,8 +15,8 @@ export async function updateCustomerProfile(req, res) {
     const existingCustomer = await db
       .select()
       .from(customers)
-      .where(eq(customers.email, email))
-      .returning();
+      .where(eq(customers.email, email));
+
     if (existingCustomer.length === 0) {
       return res.status(404).json({
         success: false,
