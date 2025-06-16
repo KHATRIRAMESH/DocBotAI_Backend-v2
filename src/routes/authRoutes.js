@@ -7,9 +7,26 @@ const router = Router();
 router.post("/register", registerUser);
 router.post(
   "/login",
-  passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/login",
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "An error occurred during login." });
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return res
+          .status(500)
+          .json({ message: "An error occurred while logging in." });
+      }
+      return res.status(200).json({
+        message: "Login successful",
+        user: { id: user.id, userType: user.type },
+      });
+    });
   })
 );
 router.get("/logout", function (req, res, next) {
