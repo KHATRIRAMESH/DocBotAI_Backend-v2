@@ -161,7 +161,7 @@ passport.use(
       console.log(record.customerEmail, adminId);
       console.log("existing customer", customer);
 
-      if (customer.length === 0) {
+      if (!customer) {
         // Create new customer on first login
         const [insertedCustomer] = await db
           .insert(customers)

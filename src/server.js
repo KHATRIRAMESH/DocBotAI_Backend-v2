@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
-import magicLinkRoutes from "./routes/magicLinkRoutes.js";
+import adminRotes from "./routes/adminRotes.js";
 import fileRequestRoutes from "./routes/fileRequest.route.js";
 // import fileRoutes from "./routes/fileRoutes.js";
 
@@ -47,7 +47,7 @@ app.get("/", (req, res) => {
 });
 //MB auth routes
 app.use("/api/auth", authRoutes);
-app.use("/api/admin", magicLinkRoutes);
+app.use("/api/admin", adminRotes);
 // app.use("/api/upload-docs", fileRoutes);
 
 app.use("/api/admin/request", fileRequestRoutes);
