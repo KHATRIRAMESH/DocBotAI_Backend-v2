@@ -33,6 +33,7 @@ app.use(
       secure: false, // Set to true if using HTTPS
       maxAge: 1000 * 60 * 60, // 1 hour
       httpOnly: true, // Helps prevent XSS attacks
+      sameSite: "lax", // Helps prevent CSRF attacks
     },
   })
 );
