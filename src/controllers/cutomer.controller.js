@@ -23,13 +23,17 @@ export async function updateCustomerProfile(req, res) {
     //   .update(customers)
     //   .set({ password: password })
     //   .where(eq(customers.email, email));
-    await db.insert(customers).values({
-      email: email,
-      password: password,
-    });
+    const insertedCustomer = await db
+      .insert(customers)
+      .values({
+        email: email,
+        password: password,
+      })
+      .returning({ email: customers.email });
     return res.status(200).json({
       success: true,
       message: "Password updated successfully.",
+      data: insertedCustomer,
     });
   } catch (error) {
     return res.status(500).json({
