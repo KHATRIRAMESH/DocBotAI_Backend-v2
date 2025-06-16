@@ -102,9 +102,11 @@ app.get("/send-magic-link", (req, res) => {
 app.get(
   "/auth/magic/callback",
   passport.authenticate("magic", {
-    successRedirect: "/dashboard",
     failureRedirect: "/login",
-  })
+  }),
+  (req, res) => {
+    res.redirect(`${process.env.FRONTEND_URL}/dashboard`); // Redirect to the client dashboard
+  }
 );
 
 app.listen(PORT, () => {
