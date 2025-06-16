@@ -4,10 +4,19 @@ CREATE TABLE "customers" (
 	"name" text,
 	"email" text NOT NULL,
 	"password" text,
-	"user" uuid NOT NULL,
-	"status" "status" DEFAULT 'inactive',
-	"created_at" timestamp DEFAULT now(),
-	CONSTRAINT "customers_email_unique" UNIQUE("email")
+	"users" uuid NOT NULL,
+	"status" "status" DEFAULT 'active',
+	"created_at" timestamp DEFAULT now()
+);
+--> statement-breakpoint
+CREATE TABLE "document_requests" (
+	"id" uuid PRIMARY KEY NOT NULL,
+	"sender_id" uuid NOT NULL,
+	"receiver_id" uuid NOT NULL,
+	"files_to_request" jsonb NOT NULL,
+	"status" text DEFAULT 'pending' NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE "magic_links" (
@@ -39,5 +48,7 @@ CREATE TABLE "users" (
 	CONSTRAINT "unique_provider_id" UNIQUE("provider","providerId")
 );
 --> statement-breakpoint
-ALTER TABLE "customers" ADD CONSTRAINT "customers_user_users_id_fk" FOREIGN KEY ("user") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "customers" ADD CONSTRAINT "customers_users_users_id_fk" FOREIGN KEY ("users") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "document_requests" ADD CONSTRAINT "document_requests_sender_id_users_id_fk" FOREIGN KEY ("sender_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "document_requests" ADD CONSTRAINT "document_requests_receiver_id_customers_id_fk" FOREIGN KEY ("receiver_id") REFERENCES "public"."customers"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "magic_links" ADD CONSTRAINT "magic_links_user_users_id_fk" FOREIGN KEY ("user") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;

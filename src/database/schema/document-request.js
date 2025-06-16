@@ -1,4 +1,4 @@
-import { jsonb, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import { jsonb, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 import { customers } from "./customer-schema";
 import { users } from "./user-schema";
 
