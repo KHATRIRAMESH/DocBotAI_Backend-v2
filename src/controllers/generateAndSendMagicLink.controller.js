@@ -2,7 +2,10 @@ import { generateAndSendMagicLink } from "../services/magiclink.service.js";
 
 export async function sendMagicLink(req, res) {
   if (!req.isAuthenticated()) {
-    return res.redirect("/login");
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
   }
   const { email } = req.body;
   const adminUser = req.user;
