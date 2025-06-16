@@ -35,7 +35,13 @@ router.get("/logout", async (req, res, next) => {
     if (err) {
       return next(err);
     }
-    res.json({ message: "Logout successful" });
+    req.session.destroy((err) => {
+      if (err) {
+        return res.status(500).json({ message: "Error during logout" });
+      }
+      res.clearCookie("connect.sid"); // Clear the session cookie
+      res.json({ message: "Logout successful" });
+    });
   });
 });
 
