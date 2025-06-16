@@ -108,7 +108,7 @@ app.get(
     failureRedirect: "/login",
   }),
   (req, res) => {
-    res.redirect(`${process.env.FRONTEND_URL}/profile`); // Redirect to the client dashboard
+    res.redirect(`${process.env.FRONTEND_URL}/modal`); // Redirect to the client dashboard
   }
 );
 
