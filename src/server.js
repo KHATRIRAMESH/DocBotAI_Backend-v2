@@ -3,13 +3,22 @@ import express from "express";
 import passport from "./middleware/auth/passport.js";
 import session from "express-session";
 import bodyParser from "body-parser";
+import cors from "cors";
 
 import authRoutes from "./routes/authRoutes.js";
 import magicLinkRoutes from "./routes/magicLinkRoutes.js";
+import fileRequestRoutes from "./routes/fileRequest.route.js";
 // import fileRoutes from "./routes/fileRoutes.js";
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8000;
 const app = express();
+const corsOptions = {
+  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true, // Allow cookies to be sent
+};
+
+app.use(cors(corsOptions));
 
 app.set("view engine", "ejs");
 
@@ -39,6 +48,8 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", magicLinkRoutes);
 // app.use("/api/upload-docs", fileRoutes);
+
+app.use("/api/admin/request", fileRequestRoutes);
 
 //for google auth
 app.get(
