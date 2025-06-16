@@ -5,9 +5,8 @@ import { registerUser } from "../controllers/auth.controller.js";
 const router = Router();
 
 router.post("/register", registerUser);
-router.post(
-  "/login",
-  passport.authenticate("local", (err, user, info) => {
+router.post("/login", async (req, res, next) => {
+  passport.authenticate("local", async (err, user, info) => {
     if (err) {
       return res
         .status(500)
@@ -16,7 +15,7 @@ router.post(
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
-    req.logIn(user, (err) => {
+    req.logIn(user, async (err) => {
       if (err) {
         return res
           .status(500)
@@ -27,8 +26,8 @@ router.post(
         user: { id: user.id, userType: user.type },
       });
     });
-  })
-);
+  });
+});
 router.get("/logout", function (req, res, next) {
   req.logout(function (err) {
     if (err) {
