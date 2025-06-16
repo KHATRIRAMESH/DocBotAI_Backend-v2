@@ -11,7 +11,7 @@ export const customers = pgTable("customers", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name"),
 
-  email: text("email").notNull().unique(),
+  email: text("email").notNull(),
   password: text("password"),
   admin: uuid("users")
     .references(() => users.id)
