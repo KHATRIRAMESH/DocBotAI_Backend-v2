@@ -172,9 +172,9 @@ passport.use(
           .returning();
 
         customer = insertedCustomer;
+        console.log("customer inserting into db", customer);
       }
 
-      console.log("customer    inserting into db", customer);
       // Token used — delete it
       await db.delete(magicLinks).where(eq(magicLinks.token, QueryToken));
 
