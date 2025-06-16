@@ -6,6 +6,7 @@ const router = Router();
 
 router.post("/register", registerUser);
 router.post("/login", async (req, res, next) => {
+  console.log("Login attempt:", req.body);
   passport.authenticate("local", async (err, user, info) => {
     if (err) {
       return res
