@@ -1,6 +1,7 @@
 import { generateAndSendMagicLink } from "../services/magiclink.service.js";
 
 export async function sendMagicLink(req, res) {
+  console.log("requester:", req.user);
   if (!req.isAuthenticated()) {
     return res.status(401).json({
       success: false,
