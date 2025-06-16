@@ -4,6 +4,7 @@ CREATE TABLE "customers" (
 	"name" text,
 	"email" text NOT NULL,
 	"password" text,
+	"role" text DEFAULT 'customer',
 	"users" uuid NOT NULL,
 	"status" "status" DEFAULT 'active',
 	"created_at" timestamp DEFAULT now()
@@ -42,6 +43,7 @@ CREATE TABLE "users" (
 	"name" text,
 	"email" text,
 	"password" text,
+	"role" text DEFAULT 'user',
 	"provider" text DEFAULT 'local',
 	"providerId" text,
 	CONSTRAINT "unique_local_email" UNIQUE("email","provider"),

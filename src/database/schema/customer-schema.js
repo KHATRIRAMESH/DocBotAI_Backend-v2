@@ -13,6 +13,7 @@ export const customers = pgTable("customers", {
 
   email: text("email").notNull(),
   password: text("password"),
+  role: text("role").default("customer"), // 'customer', 'admin', 'support'
   admin: uuid("users")
     .references(() => users.id)
     .notNull(),

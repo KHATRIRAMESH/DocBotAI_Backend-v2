@@ -1,5 +1,5 @@
 import { eq } from "drizzle-orm";
-import { pgTable, text, unique, uuid } from "drizzle-orm/pg-core";
+import { PgRole, pgTable, text, unique, uuid } from "drizzle-orm/pg-core";
 
 export const users = pgTable(
   "users",
@@ -8,6 +8,7 @@ export const users = pgTable(
     name: text("name"),
     email: text("email"), // nullable
     password: text("password"),
+    role: text("role").default("user"),
     provider: text("provider").default("local"),
     providerId: text("providerId"),
   },

@@ -1,5 +1,5 @@
 {
-  "id": "0ed05855-dc59-4ac3-8c8b-cacf0a892a8c",
+  "id": "cf8c84d7-5922-4375-9a13-365ae6e0119c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -32,6 +32,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'customer'"
         },
         "users": {
           "name": "users",
@@ -307,6 +314,13 @@
           "type": "text",
           "primaryKey": false,
           "notNull": false
+        },
+        "role": {
+          "name": "role",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'user'"
         },
         "provider": {
           "name": "provider",
