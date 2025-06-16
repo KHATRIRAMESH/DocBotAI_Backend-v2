@@ -28,14 +28,14 @@ router.post("/login", async (req, res, next) => {
         user: { id: user.id, userType: user.type },
       });
     });
-  });
+  })(req, res, next);
 });
-router.get("/logout", function (req, res, next) {
+router.get("/logout", async (req, res, next) => {
   req.logout(function (err) {
     if (err) {
       return next(err);
     }
-    res.redirect("/");
+    res.json({ message: "Logout successful" });
   });
 });
 

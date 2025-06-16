@@ -31,9 +31,9 @@ export const registerUser = async (req, res) => {
     const userWithoutPassword = { ...registeredUser, password: undefined };
     req.login(userWithoutPassword, (err) => {
       if (err) return next(err);
-      return res.redirect("/dashboard");
-      // .status(200)
-      // .json({ registeredUser, message: "User registered successfully" });
+      return res
+        .status(200)
+        .json({ userWithoutPassword, message: "User registered successfully" });
     });
   } catch (error) {
     return res.status(500).json({

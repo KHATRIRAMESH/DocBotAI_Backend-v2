@@ -15,11 +15,13 @@ import { authenticateLocalUser } from "../../controllers/auth.controller.js";
 
 // Local Strategy for email and password authentication
 passport.use(
+  "local",
   new LocalStrategy(
     {
       usernameField: "email",
     },
     async (email, password, done) => {
+      console.log("Local authentication attempt for email:", email);
       try {
         const result = await authenticateLocalUser(email, password);
         console.log("Authentication result:", result);
