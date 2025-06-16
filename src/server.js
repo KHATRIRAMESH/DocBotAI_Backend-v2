@@ -8,6 +8,7 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import adminRotes from "./routes/adminRotes.js";
 import fileRequestRoutes from "./routes/fileRequest.route.js";
+import customerRoutes from "./routes/customer.routes.js";
 // import fileRoutes from "./routes/fileRoutes.js";
 
 const PORT = process.env.PORT || 8000;
@@ -49,6 +50,8 @@ app.get("/", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/admin", adminRotes);
 // app.use("/api/upload-docs", fileRoutes);
+
+app.use("/api/customer", customerRoutes);
 
 app.use("/api/admin/request", fileRequestRoutes);
 
