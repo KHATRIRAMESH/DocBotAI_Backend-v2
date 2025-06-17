@@ -4,6 +4,12 @@ import { uplodedDocuments } from "../database/schema/document-schema.js";
 import { db } from "../database/connection/dbConnection.js";
 
 export async function uploadDocuments(req, res) {
+  if (!req.isAuthenticated()) {
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
+  }
   const uploader = req.user;
   try {
     const files = req.files;
