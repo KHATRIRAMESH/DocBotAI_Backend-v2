@@ -15,6 +15,13 @@
       "when": 1750149599143,
       "tag": "0001_high_phalanx",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1750155258343,
+      "tag": "0002_fluffy_franklin_storm",
+      "breakpoints": true
     }
   ]
 }
