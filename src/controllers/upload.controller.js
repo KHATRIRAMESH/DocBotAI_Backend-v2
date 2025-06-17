@@ -4,7 +4,7 @@ import { uplodedDocuments } from "../database/schema/document-schema.js";
 import { db } from "../database/connection/dbConnection.js";
 
 export async function uploadDocuments(req, res) {
-  const uploader = req.user || "b397a8fd-6d71-44b2-96eb-c784ded72df2";
+  const uploader = req.user;
   try {
     const files = req.files;
     // console.log("files:", files);
@@ -28,7 +28,7 @@ export async function uploadDocuments(req, res) {
     const [insertedDocument] = await db
       .insert(uplodedDocuments)
       .values({
-        uploader,
+        uploader: uploader.id,
         fileUrl: result.secure_url,
         fileName: result.original_filename,
         fileType: result.resource_type,
