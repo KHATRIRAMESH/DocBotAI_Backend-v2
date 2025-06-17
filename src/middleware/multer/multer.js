@@ -1,25 +1,33 @@
 import multer from "multer";
-import path from "path";
-import fs from "fs";
-import { fileURLToPath } from "url";
+import  Storage  from "@google-cloud/storage";
+import { v4 as uuidv4 } from "uuid";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const storage = new Storage({ keyFilename: process.env.GOOGLE_CLOUD_KEY_FILE });
+const bucket = storage.bucket(process.env.GOOGLE_CLOUD_BUCKET_NAME);
 
-// Automatically create the folder if it doesn't exist
-const uploadPath = path.join(__dirname, "../temp/uploads");
-fs.mkdirSync(uploadPath, { recursive: true });
+const multerStorage = multer.memoryStorage(); // store in RAM before uploading to GCS
+const upload = multer({ storage: multerStorage });
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadPath); // Correct relative path to your folder
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.originalname); // Use full original name
-  },
-});
+const uploadToGCS = async (file, folder = "customer-uploads") => {
+  const blobName = `${folder}/${uuidv4()}-${file.originalname}`;
+  const blob = bucket.file(blobName);
 
-export const localStore = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 },
-});
+  const stream = blob.createWriteStream({
+    resumable: false,
+    contentType: file.mimetype,
+  });
+
+  return new Promise((resolve, reject) => {
+    stream.on("error", reject);
+    stream.on("finish", async () => {
+      await blob.makePublic(); // 🟢 Make file public
+
+      const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blobName}`;
+      resolve(publicUrl);
+    });
+
+    stream.end(file.buffer);
+  });
+};
+
+export { upload, uploadToGCS };

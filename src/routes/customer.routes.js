@@ -1,5 +1,7 @@
 import express from "express";
 import { updateCustomerProfile } from "../controllers/cutomer.controller.js";
+import { upload, uploadToGCS } from "../middleware/multer/multer.js";
+import { uploadDocuments } from "../controllers/upload.controller.js";
 // import { localStore } from "../middleware/multer/multer.js";
 
 const router = express.Router();
@@ -16,6 +18,6 @@ router.get("/me", (req, res) => {
   res.json(safeUserData);
 });
 
-// router.post("/upload-file", localStore.any(), uploadDocuments);
+router.post("/upload", upload.single("file"), uploadDocuments);
 
 export default router;

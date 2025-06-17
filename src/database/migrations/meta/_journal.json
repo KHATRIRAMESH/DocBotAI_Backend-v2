@@ -8,6 +8,13 @@
       "when": 1750092851940,
       "tag": "0000_tricky_iron_fist",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1750149599143,
+      "tag": "0001_high_phalanx",
+      "breakpoints": true
     }
   ]
 }
