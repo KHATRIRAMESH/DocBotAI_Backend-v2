@@ -76,7 +76,7 @@ app.get(
   "/api/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/" }),
   (req, res) => {
-    res.redirect("/dashboard");
+    res.redirect("http://localhost:3000/dashboard"); // Redirect to the client dashboard
   }
 );
 
