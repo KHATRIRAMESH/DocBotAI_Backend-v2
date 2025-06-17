@@ -1,12 +1,15 @@
 import multer from "multer";
-import  Storage  from "@google-cloud/storage";
+import Storage from "@google-cloud/storage";
 import { v4 as uuidv4 } from "uuid";
 
 const storage = new Storage({ keyFilename: process.env.GOOGLE_CLOUD_KEY_FILE });
 const bucket = storage.bucket(process.env.GOOGLE_CLOUD_BUCKET_NAME);
 
 const multerStorage = multer.memoryStorage(); // store in RAM before uploading to GCS
-const upload = multer({ storage: multerStorage });
+const upload = multer({
+  storage: multerStorage,
+  limits: { fileSize: 10 * 1024 * 1024 },
+}); // 10 MB limit
 
 const uploadToGCS = async (file, folder = "customer-uploads") => {
   const blobName = `${folder}/${uuidv4()}-${file.originalname}`;

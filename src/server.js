@@ -32,9 +32,15 @@ app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
+app.use(
+  express.json({
+    limit: "50mb", // Increase the limit for larger payloads
+  })
+);
+
 app.set("view engine", "ejs");
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" })); // Increase the limit for larger payloads
 app.use(bodyParser.json());
 app.use(
   session({
