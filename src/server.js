@@ -1,4 +1,5 @@
 import "dotenv/config";
+// import cookieSession from "cookie-session";
 import express from "express";
 import passport from "./middleware/auth/passport.js";
 import session from "express-session";
@@ -9,17 +10,27 @@ import authRoutes from "./routes/authRoutes.js";
 import adminRotes from "./routes/adminRotes.js";
 import fileRequestRoutes from "./routes/fileRequest.route.js";
 import customerRoutes from "./routes/customer.routes.js";
+import cookieParser from "cookie-parser";
 // import fileRoutes from "./routes/fileRoutes.js";
 
 const PORT = process.env.PORT || 8000;
 const app = express();
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "http://localhost:3000",
   credentials: true, // Allow cookies to be sent
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
+  allowedHeaders: [
+    "Content-Type",
+    "Authorization",
+    "Access-Control-Allow-Origin",
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Credentials",
+  ],
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
+app.use(cookieParser());
 
 app.set("view engine", "ejs");
 
@@ -38,6 +49,7 @@ app.use(
     },
   })
 );
+
 app.use(passport.initialize());
 app.use(passport.session());
 

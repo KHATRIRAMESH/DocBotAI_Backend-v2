@@ -1,5 +1,6 @@
 import express from "express";
 import { updateCustomerProfile } from "../controllers/cutomer.controller.js";
+// import { localStore } from "../middleware/multer/multer.js";
 
 const router = express.Router();
 
@@ -14,5 +15,7 @@ router.get("/me", (req, res) => {
   const { password, ...safeUserData } = req.user;
   res.json(safeUserData);
 });
+
+// router.post("/upload-file", localStore.any(), uploadDocuments);
 
 export default router;
