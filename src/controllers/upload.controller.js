@@ -1,6 +1,6 @@
 import fs from "fs/promises";
 import { uploadToCloudinary } from "../services/uploadToCloudinary.service.js";
-import { uplodedDocuments } from "../database/schema/document-schema.js";
+import { uploadedDocuments } from "../database/schema/document-schema.js";
 import { db } from "../database/connection/dbConnection.js";
 
 export async function uploadDocuments(req, res) {
@@ -32,7 +32,7 @@ export async function uploadDocuments(req, res) {
     );
 
     const [insertedDocument] = await db
-      .insert(uplodedDocuments)
+      .insert(uploadedDocuments)
       .values({
         uploader: uploader.id,
         fileUrl: result.secure_url,

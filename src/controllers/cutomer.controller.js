@@ -1,6 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db } from "../database/connection/dbConnection.js";
 import { customers } from "../database/schema/customer-schema.js";
+import { uploadedDocuments } from "../database/schema/document-schema.js";
 
 export async function updateCustomerProfile(req, res) {
   try {
@@ -45,6 +46,28 @@ export async function updateCustomerProfile(req, res) {
     return res.status(500).json({
       success: false,
       message: "Failed to update customer profile.",
+    });
+  }
+}
+
+export async function getCustomersDocuments(req, res) {
+  try {
+    const customerId = req.params.id;
+    console.log(customerId);
+    const [documents] = await db
+      .select()
+      .from(uploadedDocuments)
+      .where(eq(uploadedDocuments.uploader, customerId));
+    console.log(documents);
+    res.status(200).json({
+      success: true,
+      data: documents,
+    });
+  } catch (error) {
+    console.log("Error fetching documents:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch documents.",
     });
   }
 }

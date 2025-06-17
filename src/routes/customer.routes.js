@@ -1,5 +1,8 @@
 import express from "express";
-import { updateCustomerProfile } from "../controllers/cutomer.controller.js";
+import {
+  getCustomersDocuments,
+  updateCustomerProfile,
+} from "../controllers/cutomer.controller.js";
 import { localStore } from "../middleware/multer/multer.middleware.js";
 import { uploadDocuments } from "../controllers/upload.controller.js";
 // import { localStore } from "../middleware/multer/multer.js";
@@ -19,5 +22,6 @@ router.get("/me", (req, res) => {
 });
 
 router.post("/upload", localStore.any(), uploadDocuments);
+router.get("/:id/documents", getCustomersDocuments);
 
 export default router;

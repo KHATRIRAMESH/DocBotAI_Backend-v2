@@ -1,0 +1,1 @@
+ALTER TABLE "uploaded_documents" ALTER COLUMN "file_url" SET DATA TYPE text;

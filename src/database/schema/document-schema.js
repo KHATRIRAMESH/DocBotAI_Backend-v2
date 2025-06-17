@@ -1,7 +1,14 @@
-import { integer, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
+import {
+  integer,
+  jsonb,
+  pgTable,
+  text,
+  timestamp,
+  uuid,
+} from "drizzle-orm/pg-core";
 import { customers } from "./customer-schema.js";
 
-export const uplodedDocuments = pgTable("uploaded_documents", {
+export const uploadedDocuments = pgTable("uploaded_documents", {
   id: uuid("id").primaryKey().defaultRandom(),
   uploader: uuid("uploader").references(() => customers.id),
   fileUrl: text("file_url").notNull(),
