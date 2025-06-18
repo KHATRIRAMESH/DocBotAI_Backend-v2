@@ -4,7 +4,11 @@ import { magicLinks } from "../database/schema/magiclink-schema.js";
 import { emailService } from "./email.service.js";
 import { db } from "../database/connection/dbConnection.js";
 
-export const generateAndSendMagicLink = async (customerEmail, adminId) => {
+export const generateAndSendMagicLink = async (
+  customerEmail,
+  adminId,
+  requestedDocumentsArray
+) => {
   if (!customerEmail || !adminId) {
     console.error("Missing customer email or admin ID.");
     throw new Error("Email and admin ID are required.");
@@ -22,6 +26,7 @@ export const generateAndSendMagicLink = async (customerEmail, adminId) => {
       token,
       customerEmail,
       admin: adminId,
+      requestedDocuments: requestedDocumentsArray || [],
       expiresAt,
     });
 
@@ -37,7 +42,7 @@ export const generateAndSendMagicLink = async (customerEmail, adminId) => {
     console.log("Generated magic link:", magicLink);
 
     // 4. Send email
-    await emailService(magicLink, customerEmail, expiresAt);
+    await emailService(magicLink, customerEmail, expiresAt,requestedDocumentsArray);
     console.log("Magic link email sent to:", customerEmail);
   } catch (error) {
     console.error("Error in generateAndSendMagicLink:", error.message);

@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1750092851940,
-      "tag": "0000_tricky_iron_fist",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1750149599143,
-      "tag": "0001_high_phalanx",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1750155258343,
-      "tag": "0002_fluffy_franklin_storm",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1750168136421,
-      "tag": "0003_cheerful_slayback",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1750168208630,
-      "tag": "0004_parallel_sentry",
+      "when": 1750236833144,
+      "tag": "0000_nasty_gunslinger",
       "breakpoints": true
     }
   ]

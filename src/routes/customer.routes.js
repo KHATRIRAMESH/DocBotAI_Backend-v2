@@ -22,6 +22,8 @@ router.get("/me", (req, res) => {
 });
 
 router.post("/upload", localStore.any(), uploadDocuments);
+
+// This route is used to get all documents of a customer by their ID
 router.get("/:id/documents", getCustomersDocuments);
 
 export default router;

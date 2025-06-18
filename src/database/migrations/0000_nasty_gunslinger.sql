@@ -6,6 +6,7 @@ CREATE TABLE "customers" (
 	"password" text,
 	"role" text DEFAULT 'customer',
 	"users" uuid NOT NULL,
+	"file_urls" jsonb,
 	"status" "status" DEFAULT 'active',
 	"created_at" timestamp DEFAULT now()
 );
@@ -20,10 +21,22 @@ CREATE TABLE "document_requests" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
+CREATE TABLE "uploaded_documents" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"uploader" uuid,
+	"file_url" text NOT NULL,
+	"file_name" text NOT NULL,
+	"file_type" text NOT NULL,
+	"file_size" integer NOT NULL,
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	"updated_at" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE "magic_links" (
 	"token" text PRIMARY KEY NOT NULL,
 	"customer_email" text NOT NULL,
 	"user" uuid NOT NULL,
+	"requested_documents" text[],
 	"expires_at" timestamp NOT NULL
 );
 --> statement-breakpoint
@@ -53,4 +66,5 @@ CREATE TABLE "users" (
 ALTER TABLE "customers" ADD CONSTRAINT "customers_users_users_id_fk" FOREIGN KEY ("users") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "document_requests" ADD CONSTRAINT "document_requests_sender_id_users_id_fk" FOREIGN KEY ("sender_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "document_requests" ADD CONSTRAINT "document_requests_receiver_id_customers_id_fk" FOREIGN KEY ("receiver_id") REFERENCES "public"."customers"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
+ALTER TABLE "uploaded_documents" ADD CONSTRAINT "uploaded_documents_uploader_customers_id_fk" FOREIGN KEY ("uploader") REFERENCES "public"."customers"("id") ON DELETE no action ON UPDATE no action;--> statement-breakpoint
 ALTER TABLE "magic_links" ADD CONSTRAINT "magic_links_user_users_id_fk" FOREIGN KEY ("user") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;

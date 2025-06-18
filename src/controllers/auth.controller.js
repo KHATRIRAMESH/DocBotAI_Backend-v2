@@ -52,7 +52,7 @@ export async function authenticateLocalUser(email, password) {
     .where(and(eq(users.email, email), eq(users.provider, "local")))
     .limit(1);
   console.log(result);
-  console.log("Result length:", !result.length);
+  console.log("User found:", result[0].name);
   if (!result.length) {
     return { success: false, message: "User not found" };
   }
