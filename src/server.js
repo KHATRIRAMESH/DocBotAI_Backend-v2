@@ -126,6 +126,7 @@ app.get(
     failureRedirect: "/login",
   }),
   (req, res) => {
+    console.log("Magic link authentication successful:", req.user);
     res.redirect(`${process.env.FRONTEND_URL}/modal`); // Redirect to the client dashboard
   }
 );
