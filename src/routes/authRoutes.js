@@ -23,6 +23,7 @@ router.post("/login", async (req, res, next) => {
           .status(500)
           .json({ message: "An error occurred while logging in." });
       }
+      console.log("User logged in:", user);
       return res.status(200).json({
         message: "Login successful",
         user: { id: user.id, userType: user },
@@ -48,6 +49,8 @@ router.post("/customer/login", async (req, res, next) => {
           .status(500)
           .json({ message: "An error occurred while logging in." });
       }
+
+      console.log("User logged in:", user);
       return res.status(200).json({
         message: "Login successful",
         user: { id: user.id, userType: user },

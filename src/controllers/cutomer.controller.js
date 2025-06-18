@@ -54,7 +54,7 @@ export async function getCustomersDocuments(req, res) {
   try {
     const customerId = req.params.id;
     console.log(customerId);
-    const [documents] = await db
+    const documents = await db
       .select()
       .from(uploadedDocuments)
       .where(eq(uploadedDocuments.uploader, customerId));
