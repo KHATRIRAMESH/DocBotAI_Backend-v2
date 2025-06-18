@@ -11,6 +11,7 @@ export async function uploadDocuments(req, res) {
     });
   }
   const uploader = req.user;
+  const requestedDocumentName = req.body.requestedDocumentName;
   try {
     const files = req.files;
     // console.log("files:", files);

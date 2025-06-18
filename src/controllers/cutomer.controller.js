@@ -78,7 +78,7 @@ export async function requestedDocumentsArray(req, res) {
   const email = requester.email;
 
   try {
-    const requestedDocuments = await db
+    const [requestedDocuments] = await db
       .select()
       .from(magicLinks)
       .where(eq(magicLinks.customerEmail, email));
@@ -90,7 +90,7 @@ export async function requestedDocumentsArray(req, res) {
     }
     res.status(200).json({
       success: true,
-      data: requestedDocuments,
+      data: requestedDocuments.requestedDocuments,
     });
   } catch (error) {
     console.log("Error fetching requested documents:", error);
