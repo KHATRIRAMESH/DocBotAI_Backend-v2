@@ -2,6 +2,7 @@ import { eq } from "drizzle-orm";
 import { db } from "../database/connection/dbConnection.js";
 import { customers } from "../database/schema/customer-schema.js";
 import { uploadedDocuments } from "../database/schema/document-schema.js";
+import { magicLinks } from "../database/schema/magiclink-schema.js";
 
 export async function updateCustomerProfile(req, res) {
   try {
@@ -68,6 +69,34 @@ export async function getCustomersDocuments(req, res) {
     return res.status(500).json({
       success: false,
       message: "Failed to fetch documents.",
+    });
+  }
+}
+
+export async function requestedDocumentsArray(req, res) {
+  const requester = req.user;
+  const email = requester.email;
+
+  try {
+    const requestedDocuments = await db
+      .select()
+      .from(magicLinks)
+      .where(eq(magicLinks.customerEmail, email));
+    if (requestedDocuments.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No requested documents found for this customer.",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: requestedDocuments,
+    });
+  } catch (error) {
+    console.log("Error fetching requested documents:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to fetch requested documents.",
     });
   }
 }

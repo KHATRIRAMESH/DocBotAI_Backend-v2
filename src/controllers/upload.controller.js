@@ -30,6 +30,7 @@ export async function uploadDocuments(req, res) {
       file.mimetype,
       file.originalname
     );
+    console.log("Cloudinary upload result:", result);
 
     const [insertedDocument] = await db
       .insert(uploadedDocuments)
@@ -37,6 +38,7 @@ export async function uploadDocuments(req, res) {
         uploader: uploader.id,
         fileUrl: result.secure_url,
         fileName: result.original_filename,
+        documentName: requestedDocumentName,
         fileType: result.resource_type,
         fileSize: result.bytes,
       })

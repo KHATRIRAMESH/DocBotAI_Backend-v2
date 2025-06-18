@@ -26,6 +26,7 @@ CREATE TABLE "uploaded_documents" (
 	"uploader" uuid,
 	"file_url" text NOT NULL,
 	"file_name" text NOT NULL,
+	"document_name" text,
 	"file_type" text NOT NULL,
 	"file_size" integer NOT NULL,
 	"created_at" timestamp DEFAULT now() NOT NULL,

@@ -209,7 +209,7 @@ passport.use(
       }
 
       // Token used — delete it
-      await db.delete(magicLinks).where(eq(magicLinks.token, QueryToken));
+      // await db.delete(magicLinks).where(eq(magicLinks.token, QueryToken));
 
       return done(null, customer);
     } catch (error) {

@@ -1,6 +1,6 @@
 {
-  "id": "e07ec0fa-cb85-40ef-8288-0eefe3f49864",
-  "prevId": "00000000-0000-0000-0000-000000000000",
+  "id": "ebba7f44-b178-4f3f-9bc4-671a866d3d79",
+  "prevId": "e07ec0fa-cb85-40ef-8288-0eefe3f49864",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -208,7 +208,7 @@
           "name": "document_name",
           "type": "text",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "file_type": {
           "name": "file_type",

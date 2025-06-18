@@ -1,6 +1,7 @@
 import express from "express";
 import {
   getCustomersDocuments,
+  requestedDocumentsArray,
   updateCustomerProfile,
 } from "../controllers/cutomer.controller.js";
 import { localStore } from "../middleware/multer/multer.middleware.js";
@@ -25,5 +26,7 @@ router.post("/upload", localStore.any(), uploadDocuments);
 
 // This route is used to get all documents of a customer by their ID
 router.get("/:id/documents", getCustomersDocuments);
+
+router.get("/magic-link/requested-documents", requestedDocumentsArray);
 
 export default router;
