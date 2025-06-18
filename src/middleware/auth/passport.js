@@ -41,6 +41,39 @@ passport.use(
   )
 );
 
+passport.use(
+  "customer-local",
+  new LocalStrategy(
+    {
+      usernameField: "email",
+    },
+    async (email, password, done) => {
+      console.log("Customer local authentication attempt for email:", email);
+      try {
+        const result = await db
+          .select()
+          .from(customers)
+          .where(eq(customers.email, email))
+          .limit(1);
+        console.log("Customer authentication result:", result);
+        if (result.length === 0) {
+          return done(null, false, { message: "Customer not found" });
+        }
+        const customer = result[0];
+        if (customer.password !== password) {
+          return done(null, false, { message: "Invalid password" });
+        }
+        return done(null, customer);
+      } catch (error) {
+        return done(
+          error.message || "An error occurred during customer authentication",
+          null
+        );
+      }
+    }
+  )
+);
+
 // Google OAuth Strategy
 passport.use(
   new GoogleStrategy(

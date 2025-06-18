@@ -30,6 +30,32 @@ router.post("/login", async (req, res, next) => {
     });
   })(req, res, next);
 });
+
+router.get("/customer/login", async (req, res, next) => {
+  passport.authenticate("customer-local", async (err, user, info) => {
+    if (err) {
+      return res
+        .status(500)
+        .json({ message: "An error occurred during login." });
+    }
+    if (!user) {
+      return res.status(401).json({ message: "Invalid credentials" });
+    }
+    req.logIn(user, async (err) => {
+      console.log("Login attempt:", user);
+      if (err) {
+        return res
+          .status(500)
+          .json({ message: "An error occurred while logging in." });
+      }
+      return res.status(200).json({
+        message: "Login successful",
+        user: { id: user.id, userType: user },
+      });
+    });
+  })(req, res, next);
+});
+
 router.get("/logout", async (req, res, next) => {
   req.logout(function (err) {
     if (err) {

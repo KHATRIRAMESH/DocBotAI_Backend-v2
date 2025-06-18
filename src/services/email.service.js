@@ -1,3 +1,6 @@
+import "dotenv/config.js";
+import nodemailer from "nodemailer";
+
 export const emailService = async (
   magicLink,
   customerEmail,
