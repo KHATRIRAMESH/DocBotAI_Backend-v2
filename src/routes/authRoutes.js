@@ -31,7 +31,7 @@ router.post("/login", async (req, res, next) => {
   })(req, res, next);
 });
 
-router.get("/customer/login", async (req, res, next) => {
+router.post("/customer/login", async (req, res, next) => {
   passport.authenticate("customer-local", async (err, user, info) => {
     if (err) {
       return res
